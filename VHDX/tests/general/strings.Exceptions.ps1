@@ -13,6 +13,13 @@ $exceptions['LegalSurplus'] = @(
 )
 #>
 $exceptions['LegalSurplus'] = @(
+	
+)
+<#
+A list of entries that MAY be used without needing to have text defined.
+This is intended for modules (re-)using strings provided by another module
+#>
+$exceptions['NoTextNeeded'] = @(
 	'Validate.FSPath.File'
 	'Validate.FSPath.FileOrParent'
 )
