@@ -23,6 +23,12 @@
 		This parameters disables user-friendly warnings and enables the throwing of exceptions.
 		This is less user friendly, but allows catching exceptions in calling scripts.
 	
+	.PARAMETER Confirm
+		If this switch is enabled, you will be prompted for confirmation before executing any operations that change state.
+	
+	.PARAMETER WhatIf
+		If this switch is enabled, no actions are performed but informational messages will be displayed that explain what would happen if the command were to run.
+	
 	.EXAMPLE
 		PS C:\> Remove-VhdxContent -Path 'c:\disks\data.vhdx' -Content 'secret.txt'
 	
@@ -34,7 +40,7 @@
 		Removes all txt files from the subfolder config\secrets of the volume of the specified disk.
 		Assuming that volume, once mounted, has the drive letter "T", every text file in "T:\config\secrets" would be deleted.
 #>
-	[CmdletBinding()]
+	[CmdletBinding(SupportsShouldProcess = $true)]
 	param (
 		[Parameter(Mandatory = $true)]
 		[PsfValidateScript('PSFramework.Validate.FSPath.File', ErrorString = 'PSFramework.Validate.FSPath.File')]
@@ -82,8 +88,9 @@
 		
 		foreach ($item in $Content) {
 			$itemPath = Join-Path -Path $rootPath -ChildPath $item
-			Write-PSFMessage -String 'Remove-VhdxContent.Removing.Item' -StringValues $itemPath -Target $resolvedPath
-			Remove-Item -Path $itemPath -Recurse -Force
+			Invoke-PSFProtectedCommand -ActionString 'Remove-VhdxContent.Removing.Item' -ActionStringValues $itemPath -Target $resolvedPath -ScriptBlock {
+				Remove-Item -Path $itemPath -Recurse -Force -Confirm:$false -ErrorAction Stop
+			} -EnableException $EnableException -PSCmdlet $PSCmdlet -Continue
 		}
 	}
 	end {

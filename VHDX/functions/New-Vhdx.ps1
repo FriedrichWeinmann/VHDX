@@ -34,7 +34,7 @@
 	
 		Creates a new vhdx file as 'C:\disks\sccm-content.vhdx', adding all files and folders from 'C:\install\sccm\' to it.
 #>
-	
+	[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseShouldProcessForStateChangingFunctions", "")]
     [CmdletBinding()]
     param (
         [Parameter(Mandatory = $true)]
