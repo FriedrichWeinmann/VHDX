@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2010
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FF2241F1-A194-4BCC-B470-261C49BE7C52}") = "VHDX", "VHDX\VHDX.csproj", "{EB4DA56F-A633-4AE6-B78C-D2CB5333797C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EB4DA56F-A633-4AE6-B78C-D2CB5333797C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB4DA56F-A633-4AE6-B78C-D2CB5333797C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB4DA56F-A633-4AE6-B78C-D2CB5333797C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB4DA56F-A633-4AE6-B78C-D2CB5333797C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {938E2691-BB7C-426B-8F36-33B4A1F7B0D3}
+	EndGlobalSection
+EndGlobal
