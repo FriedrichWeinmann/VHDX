@@ -13,8 +13,8 @@ $exceptions['LegalSurplus'] = @(
 )
 #>
 $exceptions['LegalSurplus'] = @(
-	'Validate.FSPath.File'
-	'Validate.FSPath.FileOrParent'
+	'PSFramework.Validate.FSPath.File'
+	'PSFramework.Validate.FSPath.FileOrParent'
 )
 
 $exceptions
