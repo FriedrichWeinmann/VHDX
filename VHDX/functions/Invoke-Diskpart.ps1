@@ -27,6 +27,7 @@
 		Assert-Elevation -Cmdlet $PSCmdlet
 		
 		$startInfo = [System.Diagnostics.ProcessStartInfo]::new()
+		$startInfo.UseShellExecute = $false
 		$startInfo.RedirectStandardError = $true
 		$startInfo.RedirectStandardInput = $true
 		$startInfo.RedirectStandardOutput = $true
