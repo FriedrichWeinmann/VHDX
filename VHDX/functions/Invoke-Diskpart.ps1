@@ -27,6 +27,7 @@
 		Assert-Elevation -Cmdlet $PSCmdlet
 		
 		$startInfo = [System.Diagnostics.ProcessStartInfo]::new()
+		$startInfo.UseShellExecute = $false
 		$startInfo.RedirectStandardError = $true
 		$startInfo.RedirectStandardInput = $true
 		$startInfo.RedirectStandardOutput = $true
@@ -47,7 +48,7 @@
 		
 		while (-not $process.HasExited) { Start-Sleep -Milliseconds 100 }
 		
-		$messages = $process.StandardOutput.ReadToEnd() -split 'DISKPART>' | ForEach-Object Trim | Select-Object -Skip 1
+		$messages = $process.StandardOutput.ReadToEnd() -split 'DISKPART>' | ForEach-Object Trim | Microsoft.PowerShell.Utility\Select-Object -Skip 1
 		foreach ($message in $messages) {
 			Write-PSFMessage -String 'Invoke-Diskpart.Message' -StringValues $message
 		}

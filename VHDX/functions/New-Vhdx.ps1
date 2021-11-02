@@ -67,6 +67,11 @@
         }
 
         $resolvedPath = Resolve-PSFPath -Path $Path -Provider FileSystem -SingleItem -NewChild
+		# Normalize path to avoid legacy-shortening of folder names breaking later comparisons
+		$parent = Split-Path -Path $resolvedPath
+		$fileName = Split-Path -Path $resolvedPath -Leaf
+		$resolvedPath = Join-Path -Path (Get-Item -Path $parent).FullName -ChildPath $fileName
+
 		$diskPartCommand = 'create vdisk file="{0}" maximum={1} type={2}' -f $resolvedPath, $Size.Megabyte, $typeMapping[$Type]
 		$result = Invoke-Diskpart -ArgumentList $diskPartCommand
 		
@@ -86,14 +91,26 @@
 			Stop-PSFFunction -String 'New-Vhdx.PrepareDisk.Failed' -StringValues $resolvedPath, $result.Errors -EnableException $true
         }
 
-        $disk = Get-Disk | Where-Object Location -EQ $resolvedPath
-        $volume = $disk | Get-Partition | Get-Volume
+		$start = Get-Date
+		do {
+			Start-Sleep -Milliseconds 200
+			$disk = Get-Disk | Where-Object Location -EQ $resolvedPath
+			$volume = $disk | Get-Partition | Get-Volume
+			if ($start.AddMinutes(1) -lt (Get-Date)) {
+				Write-PSFMessage -Level Warning -String 'New-Vhdx.Volume.Timeout'
+				break
+			}
+		}
+		until ($volume.DriveLetter)
         $rootPath = '{0}:\' -f $volume.DriveLetter
+		$null = Get-PSProvider | Write-Output
     }
     process {
 		foreach ($inputItem in $Content) {
-			Write-PSFMessage -String 'New-Vhdx.Copying' -StringValues $inputItem
-            Copy-Item -Path $inputItem -Destination $rootPath -Force -Recurse
+			Write-PSFMessage -String 'New-Vhdx.Copying' -StringValues $inputItem, $rootPath
+			Invoke-PSFProtectedCommand -ActionString 'New-Vhdx.Copying' -ActionStringValues $inputItem, $rootPath -Target $volume.DriveLetter -ScriptBlock {
+				Copy-Item -Path $inputItem -Destination $rootPath -Force -Recurse -ErrorAction Stop
+			} -PSCmdlet $PSCmdlet -Continue
         }
     }
 	end {
