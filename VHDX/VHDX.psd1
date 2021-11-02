@@ -3,7 +3,7 @@
 	RootModule = 'VHDX.psm1'
 	
 	# Version number of this module.
-	ModuleVersion = '1.0.1'
+	ModuleVersion = '1.0.5'
 	
 	# ID used to uniquely identify this module
 	GUID = 'a59182b4-2f77-44f2-bc12-323b53bc82ba'
@@ -26,7 +26,7 @@
 	# Modules that must be imported into the global environment prior to importing
 	# this module
 	RequiredModules = @(
-		@{ ModuleName='PSFramework'; ModuleVersion='1.6.198' }
+		@{ ModuleName='PSFramework'; ModuleVersion='1.6.205' }
 	)
 	
 	# Assemblies that must be loaded prior to importing this module

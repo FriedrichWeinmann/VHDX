@@ -103,6 +103,7 @@
 		}
 		until ($volume.DriveLetter)
         $rootPath = '{0}:\' -f $volume.DriveLetter
+		$null = Get-PSProvider | Write-Output
     }
     process {
 		foreach ($inputItem in $Content) {
