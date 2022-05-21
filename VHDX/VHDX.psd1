@@ -3,7 +3,7 @@
 	RootModule = 'VHDX.psm1'
 	
 	# Version number of this module.
-	ModuleVersion = '1.0.5'
+	ModuleVersion = '1.0.6'
 	
 	# ID used to uniquely identify this module
 	GUID = 'a59182b4-2f77-44f2-bc12-323b53bc82ba'
