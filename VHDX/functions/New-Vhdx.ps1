@@ -100,11 +100,14 @@
 				Write-PSFMessage -Level Warning -String 'New-Vhdx.Volume.Timeout'
 				break
 			}
+			$rootPath = '{0}:\' -f $volume.DriveLetter
+			$null = Get-PSProvider | Write-Output
+			if ($volume.DriveLetter -and -not (Test-Path -Path $rootPath)) {
+				$null = New-PSDrive -Name $volume.DriveLetter -PSProvider FileSystem -Root $rootPath -ErrorAction Ignore
+			}
 		}
-		until ($volume.DriveLetter)
-        $rootPath = '{0}:\' -f $volume.DriveLetter
-		$null = Get-PSProvider | Write-Output
-    }
+		until ($volume.DriveLetter -and (Test-Path -Path $rootPath))
+	}
     process {
 		foreach ($inputItem in $Content) {
 			Write-PSFMessage -String 'New-Vhdx.Copying' -StringValues $inputItem, $rootPath
